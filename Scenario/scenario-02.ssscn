@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config build="v2.4.55" version="11">
+    <description></description>
+    <model filename="../model_plant12000k.ssmod">
+        <density column="density" default="2.5"/>
+        <slope column="" default="45"/>
+        <destinations>
+            <destination name="Process 1" id="1" type="process">
+                <recoveries>
+                    <recovery column="Recovery" variable="Copper"/>
+                </recoveries>
+            </destination>
+            <destination name="Dump 1" id="2" type="dump"/>
+        </destinations>
+        <groups>
+            <group name="Total" id="1">
+                <destination>1</destination>
+                <destination>2</destination>
+            </group>
+        </groups>
+    </model>
+    <economic>
+        <discountRate>0.08</discountRate>
+        <discountFromZero>0</discountFromZero>
+    </economic>
+    <schedule>
+        <ultimatePit discounting="false" import="false"/>
+        <periods>
+            <period from="1" timeframe="1">
+                <production destination="1">
+                    <max>7000000</max>
+                </production>
+                <production group="1">
+                    <max>30000000</max>
+                </production>
+                <economic destination="1" column="Destination_1"/>
+                <economic destination="2" column="Destination_2"/>
+                <sums destination="1" column="mass">
+                    <average>
+                        <min penalty="1000000">5000000</min>
+                    </average>
+                </sums>
+                <sums destination="1" column="Hours">
+                    <average/>
+                    <simulations>
+                        <max penalty="1000000">7884</max>
+                    </simulations>
+                </sums>
+                <sums column="mass" group="1">
+                    <average>
+                        <min penalty="1000000">25000000</min>
+                        <max penalty="1000000">30000000</max>
+                    </average>
+                </sums>
+            </period>
+        </periods>
+    </schedule>
+    <reports>
+        <file>
+            <surfaces>true</surfaces>
+            <model coordinates="true" indexes="true" blocks="mined">true</model>
+        </file>
+        <visualization>
+            <surfaces>true</surfaces>
+            <model>true</model>
+        </visualization>
+    </reports>
+</config>
